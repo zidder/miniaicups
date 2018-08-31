@@ -13,6 +13,7 @@ class Strategy:
         self.last = 'stop'
         self.c = Counter()
         self.dct = {}
+        self.lives = None
 
     @staticmethod
     def signum(a, b):
@@ -25,11 +26,18 @@ class Strategy:
     def set_state(self, state):
         self.wfile.write(str(state) + '\n'+str(type(state))+'\n')
         if state['type'] != 'tick':
+            if self.lives > state['my_lives']:
+                pass
+                # TODO: vat ban
+            else:
+                # TODO lav ban
+                pass
+            self.lives = state['my_lives']
             return
         params = state['params']
         my_car = params['my_car']
         enemy_car = params['enemy_car']
-        current_state = (my_car[2], my_car[1] // 0.032,
+        current_state = (my_car[2], my_car[1] // 0.032 // 5,
                          self.signum(my_car[0][0], enemy_car[0][0]),
                          self.signum(my_car[0][1], enemy_car[0][1]),
                          params['deadline_position'])
@@ -45,6 +53,8 @@ class Strategy:
         return command
 
     def __del__(self):
+        self.wfile.write(str(self.dct.keys())+'\n')
+        self.wfile.write('close')
         self.wfile.close()
 
 
