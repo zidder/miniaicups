@@ -4,7 +4,7 @@ import sys
 
 
 class Strategy:
-    def __init__(self, epsilon, alpha=0.1, update_beta=0.05):
+    def __init__(self, epsilon, alpha=0.02, update_beta=0.05):
         self.dct = {}
         self.alpha = alpha
         self.beta = update_beta
